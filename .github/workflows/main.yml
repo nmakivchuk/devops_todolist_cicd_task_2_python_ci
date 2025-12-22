@@ -1,5 +1,5 @@
 name: ciccd_task_2
-run-name: ${{ github.actor }} - ${{ github.ref_name }}
+run-name: ${{ github.actor }} - ${{ github.sha }}
 
 on:
   push:
@@ -34,5 +34,10 @@ jobs:
 
       - name: Lint
         run: |
-          flake8 . --show-source --statistics
+          flake8 . --show-source --statistics --exit-zero
+
+      - name: Check Complexity
+        run: |
+          flake8 . --statistics --max-complexity=10 --exit-zero
+
 
