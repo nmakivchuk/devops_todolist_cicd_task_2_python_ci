@@ -29,21 +29,38 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest pytest-cov
+          pip install flake8 pytest coverage
           pip install -r requirements.txt
 
-      - name: Lint
+      - name: Run tests
         run: |
-          flake8 . --show-source --statistics --exit-zero
+          pytest
 
-      - name: Check Complexity
-        working-directory: src
+      - name: Generate coverage
         run: |
-          flake8 . --statistics --max-complexity=10 --exit-zero
+          coverage run -m pytest
 
-      - name: Run unit tests by pytest
-        working-directory: src
+      - name: Show coverage report
         run: |
-          pytest --cov-report=term-missing —-cov=. --cov-report=json
+          coverage report -m
+
+      - name: Check code style (flake8)
+        continue-on-error: true
+        run: |
+          flake8 .
+
+      - name: Check code complexity
+        continue-on-error: true
+        run: |
+          flake8 . --max-complexity=10
+
+      - name: Upload python source code
+        uses: actions/upload-artifact@4
+        with:
+          name: python source code
+          path: |
+            **/*.py
+
+
 
 
