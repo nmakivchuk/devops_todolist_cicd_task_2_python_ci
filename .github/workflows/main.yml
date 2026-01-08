@@ -37,10 +37,12 @@ jobs:
           flake8 . --show-source --statistics --exit-zero
 
       - name: Check Complexity
+        working-directory: src
         run: |
           flake8 . --statistics --max-complexity=10 --exit-zero
 
       - name: Run unit tests by pytest
+        working-directory: src
         run: |
           pytest --cov-report=term-missing —-cov=. --cov-report=json
 
