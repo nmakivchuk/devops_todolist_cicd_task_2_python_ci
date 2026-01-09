@@ -29,26 +29,31 @@ jobs:
           pip install -r src/requirements.txt
 
       - name: Run tests
+        working-directory: src
         run: |
-          pytest tests
+          pytest
 
       - name: Generate coverage
+        working-directory: src
         run: |
-          coverage run -m pytest tests
+          coverage run -m pytest
 
       - name: Show coverage report
+        working-directory: src
         run: |
           coverage report -m
 
       - name: Check code style (flake8)
         continue-on-error: true
+        working-directory: src
         run: |
-          flake8 src
+          flake8 .
 
       - name: Check code complexity
         continue-on-error: true
+        working-directory: src
         run: |
-          flake8 src --max-complexity=10
+          flake8 . --max-complexity=10
 
       - name: Upload python source code
         uses: actions/upload-artifact@v4
