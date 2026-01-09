@@ -37,7 +37,7 @@ jobs:
       - name: Generate coverage
         working-directory: src
         run: |
-          coverage run -m pytest
+          coverage run manage.py pytest
 
       - name: Show coverage report
         working-directory: src
@@ -56,9 +56,9 @@ jobs:
         run: |
           flake8 . --max-complexity=10
 
-      - name: Upload python source code
+      - name: Upload Python code as an artifact
         uses: actions/upload-artifact@v4
         with:
-          name: python-source-code
-          path: |
-            src/**/*.py
+          name: python-code
+          path: ./src
+
